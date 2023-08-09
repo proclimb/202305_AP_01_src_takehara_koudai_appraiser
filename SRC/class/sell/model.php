@@ -111,6 +111,7 @@ function fnSqlSellUpdate($param)
     $sql .= ",PRICE = '" . $param["price"] . "'";
     $sql .= ",NOTE = '" . $param["note"] . "'";
     $sql .= ",UPDT = CURRENT_TIMESTAMP";
+    $sql .= " WHERE SELLNO = " . $param["sellNo"];
 
     return $sql;
 }
@@ -121,12 +122,12 @@ function fnSqlSellUpdate($param)
 function fnSqlSellInsert($param)
 {
     $sql = "INSERT INTO TBLSELL(";
-    $sql .= "SELLNO,SEARCHDT,ARTICLE,ADDRESS,STATION,FOOT,YEARS,FLOOR,AREA,SELLER,PRICE,NOTE,INSDT,UPDT";
+    $sql .= "SELLNO,SEARCHDT,ARTICLE,ADDRESS,STATION,FOOT,YEARS,FLOOR,AREA,SELLER,PRICE,NOTE,INSDT,UPDT,DEL";
     $sql .= ")VALUES(";
     $sql .= "'" . $param["sellNo"] . "','" . $param["searchDT"] . "','" . $param["article"] . "','" . $param["address"] . "',"
         . "'" . $param["station"] . "','" . $param["foot"] . "','" . $param["years"] . "','" . $param["floor"] . "',"
         . "'" . $param["area"] . "','" . $param["seller"] . "','" . $param["price"] . "','" . $param["note"] . "',"
-        . "CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
+        . "CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,1)";
 
     return $sql;
 }
@@ -137,7 +138,7 @@ function fnSqlSellInsert($param)
 function fnSqlSellDelete($sellNo)
 {
     $sql = "UPDATE TBLSELL";
-    $sql .= " SET DEL = 1";
+    $sql .= " SET DEL = -1";
     $sql .= ",UPDT = CURRENT_TIMESTAMP";
     $sql .= " WHERE SELLNO = '$sellNo'";
 
